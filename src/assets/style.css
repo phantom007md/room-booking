@@ -1,0 +1,154 @@
+
+body,html{
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+*{
+  box-sizing: border-box;
+  outline: none;
+}
+
+.wrapper{
+  width: 60%;
+  margin: 200px auto;
+}
+
+.room-select-wrap{
+  width: 100%;
+  padding: 10px;
+  background: #9DB2BB;
+  border-bottom:1px solid #2A3E47;
+}
+
+.room-select{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  min-width: 60px;
+  height: 30px;
+  margin:10px 25px;
+  color: #FFF;
+}
+
+.row-index{
+  height: auto;
+  width: 100%;
+  background: #92A2AA;
+  border-bottom:1px solid #2A3E47;
+  display: flex;
+  align-items: center;;
+}
+
+.row{
+  width: 97%;
+  display: flex;
+  flex-direction: column;
+}
+
+.row span{
+  margin-left: 10px;
+  font-family: tahoma;
+  font-size: 14px;
+  color: #FFF;
+}
+
+.age-select{
+  width: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row-id{
+  width: 3%;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #B5B5B5;
+  color: #FFF;
+}
+
+.adult-count{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  min-width: 60px;
+  height: 30px;
+  margin:10px;
+  color: #FFF;
+}
+
+.child-count{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  min-width: 60px;
+  height: 30px;
+  margin:10px;
+  color: #FFF;
+}
+
+.infant-count{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  min-width: 60px;
+  height: 30px;
+  margin:10px;
+  color: #FFF;
+}
+
+.child-age{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  width: 75px;
+  height: 30px;
+  margin:10px;
+  color: #FFF;
+}
+
+.infant-age{
+  background:#B5B5B5;
+  border: 1px solid #5D5D5D;
+  width: 75px;
+  height: 30px;
+  margin:10px;
+  color: #FFF;
+}
+
+.submit-wrap{
+  width: 100%;
+  padding: 10px;
+  background: #92A2AA;
+  border-bottom:1px solid #2A3E47;
+}
+
+.btn{
+  border: 0px;
+  width: auto;
+  height: 30px;
+  color: #FFF;
+  background: #3D535D;
+  cursor: pointer;
+  transition: all linear .2s;
+  margin-left: 200px;
+}
+
+.btn:hover{
+  background: #8BBCD1;
+  color: #000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*scroll*/

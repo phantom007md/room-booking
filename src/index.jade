@@ -1,0 +1,50 @@
+doctype
+html
+  head
+    title Booking
+    link(rel="stylesheet",href="/src//assets/style.css")
+  body
+    .wrapper
+      .room-select-wrap
+        select.room-select
+          option 1
+          option 2
+          option 3
+          option 4
+      .row-index
+        span.row-id 1
+        .row
+          .count-select
+            span adult count:
+            select.adult-count
+              option 1
+              option 2
+              option 3
+              option 4
+            span child count:
+            select.child-count
+              option 1
+              option 2
+            span infant count:
+            select.infant-count
+              option 1
+              option 2
+          .age-select
+            .child-age-wrap
+              span child 1 age:
+              select.child-age
+                option 2 YEAR
+                option 3 YEAR
+                option 4 YEAR
+                option 5 YEAR
+                option 6 YEAR
+                option 7 YEAR
+            .child-age-wrap
+              span infant 1 age:
+              select.infant-age
+                option 0 YEAR 
+                option 1 YEAR
+                option 2 YEAR
+      .submit-wrap
+        button(type="submit").btn SUBMIT
+          

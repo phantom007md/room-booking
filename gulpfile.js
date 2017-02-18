@@ -5,11 +5,20 @@ var ugly = require('gulp-uglify');
 var concat = require('gulp-concat');
 var rename = require("gulp-rename");
 var b_sync = require('browser-sync').create();
+var jadi = require('gulp-jade');
 
 function onError(err) {
   console.log(err);
   this.emit('end');
 }
+
+gulp.task('jadee', function () {
+  gulp.src('./src/**/*.jade')
+  .pipe(jadi({
+    pretty: true
+  }))
+  .pipe(gulp.dest('./'))
+})
 
 gulp.task('compile-js', function() {
   var ts_opt = {
@@ -42,14 +51,17 @@ gulp.task('rename', ['compress'], function () {
   .pipe(b_sync.stream());
 });
 
-gulp.task('default', ['rename'], function() {
+
+
+gulp.task('default', ['rename','jadee'], function() {
   b_sync.init({
     server: {
       baseDir: "./"
     }
   });
+  gulp.watch('./src/**/*.jade', ['jadee']);
   gulp.watch('./src/**/*.ts', ['rename']);
-  gulp.watch('./**/*.{html,css}', function() {
+  gulp.watch('./**/*.{html,css}', ['rename'], function() {
     gulp.src('./src/**/*.css').pipe(b_sync.stream());
     b_sync.reload();
   });
