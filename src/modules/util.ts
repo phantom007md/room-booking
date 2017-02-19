@@ -42,8 +42,15 @@ namespace Booking {
     }
 
     static selectBoxVal(selector){
-      const selectBox = Booking.$.select(selector);
-      return selectBox.options[selectBox.selectedIndex].value;
+      if (selector instanceof HTMLSelectElement) {
+        // console.log('its an obj');
+        return selector.options[selector.selectedIndex].value;
+      }else{
+        const selectBox = Booking.$.select(selector);
+        // console.log('its an elem');
+        return selectBox.options[selectBox.selectedIndex].value;
+        
+      }
     }
 
   }

@@ -1,19 +1,48 @@
 /// <reference path="./util.ts"/>
 
 namespace Booking {
-
   export class RoomManage {
     private roomTemplate: string;
     private roomCount: number;
-
+    private rooms: Object;
+    private roomSelectBox: Element;
+    private childAgeTemplate: string;
+    private infantAgeTemplate: string;
     constructor() {
-      this.roomRow();
+      this.bindEvents();
+      this.roomCountVal();
+      this.templateGenrator();
+      this.templateInjector();
     }
-
-    private roomRow() {
-
+    private roomCountVal(){
       this.roomCount = Booking.$.selectBoxVal('.room-select');
-      
+    }
+    private bindEvents(){
+      this.roomSelectBox = Booking.$.select('.room-select');
+    }
+    private templateInjector(){
+      Booking.$.select('.row-index-wrap').innerHTML=this.roomTemplate;
+    }
+    private templateGenrator() {
+      this.childAgeTemplate=`
+      <div class="child-age-wrap"><span>child </span><span>1</span><span>age</span>
+        <select class="child-age">
+          <option>2 YEAR</option>
+          <option>3 YEAR</option>
+          <option>4 YEAR</option>
+          <option>5 YEAR</option>
+          <option>6 YEAR</option>
+          <option>7 YEAR</option>
+        </select>
+      </div>`;
+      this.infantAgeTemplate=`
+      <div class="infant-age-wrap"><span>infant </span><span>1</span><span>age</span>
+        <select class="infant-age">
+          <option>0 YEAR </option>
+          <option>1 YEAR</option>
+          <option>2 YEAR</option>
+        </select>
+      </div>`;
       this.roomTemplate = `
         <div class="row-index"><span class="row-id">1</span>
           <div class="row">
@@ -36,27 +65,16 @@ namespace Booking {
               </select>
             </div>
             <div class="age-select">
-              <div class="child-age-wrap"><span>child </span><span>1</span><span>age</span>
-                <select class="child-age">
-                  <option>2 YEAR</option>
-                  <option>3 YEAR</option>
-                  <option>4 YEAR</option>
-                  <option>5 YEAR</option>
-                  <option>6 YEAR</option>
-                  <option>7 YEAR</option>
-                </select>
-              </div>
-              <div class="infant-age-wrap"><span>infant </span><span>1</span><span>age</span>
-                <select class="infant-age">
-                  <option>0 YEAR </option>
-                  <option>1 YEAR</option>
-                  <option>2 YEAR</option>
-                </select>
-              </div>
+              ${this.childAgeTemplate}
+              ${this.infantAgeTemplate}
             </div>
           </div>
-        </div>`
+        </div>`;
     }
+
+
+
+
 
   }
 

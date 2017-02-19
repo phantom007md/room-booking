@@ -8,7 +8,7 @@ var b_sync = require('browser-sync').create();
 var jadi = require('gulp-jade');
 
 function onError(err) {
-  console.log(err);
+  // console.log(err);
   this.emit('end');
 }
 
@@ -22,7 +22,7 @@ gulp.task('jadee', function () {
 
 gulp.task('compile-js', function() {
   var ts_opt = {
-    outDir: './dist',
+    // outDir: './dist',
     // target: 'ES5',
     // module: 'es2015',
     outFile: './dist/ts/bookingroom.js'
