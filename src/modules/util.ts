@@ -40,5 +40,11 @@ namespace Booking {
         }
         return true;
     }
+
+    static selectBoxVal(selector){
+      const selectBox = Booking.$.select(selector);
+      return selectBox.options[selectBox.selectedIndex].value;
+    }
+
   }
 }

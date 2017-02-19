@@ -23,12 +23,13 @@ gulp.task('jadee', function () {
 gulp.task('compile-js', function() {
   var ts_opt = {
     outDir: './dist',
-    target: 'ES5',
-    module: 'es2015',
+    // target: 'ES5',
+    // module: 'es2015',
     outFile: './dist/ts/bookingroom.js'
   }
   return gulp.src('./src/**/*.ts')
     .pipe(ts(ts_opt))
+    .on('error', onError)
     .pipe(gulp.dest('./'));
 });
 
@@ -38,13 +39,14 @@ gulp.task('compile-js', function() {
 //     .pipe(gulp.dest('./dist/concat'));
 // });
 
-gulp.task('compress', ['compile-js'], function() {
-  return gulp.src('./dist/ts/bookingroom.js')
-    .pipe(ugly())
-    .pipe(gulp.dest('./dist/ugly/'))
-});
+// gulp.task('compress', ['compile-js'], function() {
+//   return gulp.src('./dist/ts/bookingroom.js')
+//     .pipe(ugly())
+//     .on('error', onError)
+//     .pipe(gulp.dest('./dist/ugly/'))
+// });
 
-gulp.task('rename', ['compress'], function () {
+gulp.task('rename',['compile-js'], function () {
   return gulp.src('./dist/ugly/bookingroom.js')
   .pipe(rename('bookingroom-min.js'))
   .pipe(gulp.dest("./build"))

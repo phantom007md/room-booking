@@ -47,7 +47,7 @@ body,html{
 }
 
 .row span{
-  margin-left: 10px;
+  margin-left: 5px;
   font-family: tahoma;
   font-size: 14px;
   color: #FFF;
@@ -129,7 +129,7 @@ body,html{
   background: #3D535D;
   cursor: pointer;
   transition: all linear .2s;
-  margin-left: 200px;
+  margin-left: 30px;
 }
 
 .btn:hover{

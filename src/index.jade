@@ -23,15 +23,19 @@ html
               option 4
             span child count:
             select.child-count
+              option 0
               option 1
               option 2
             span infant count:
             select.infant-count
+              option 0
               option 1
               option 2
           .age-select
             .child-age-wrap
-              span child 1 age:
+              span child 
+              span 1
+              span age
               select.child-age
                 option 2 YEAR
                 option 3 YEAR
@@ -39,12 +43,15 @@ html
                 option 5 YEAR
                 option 6 YEAR
                 option 7 YEAR
-            .child-age-wrap
-              span infant 1 age:
+            .infant-age-wrap
+              span infant 
+              span 1
+              span age
               select.infant-age
                 option 0 YEAR 
                 option 1 YEAR
                 option 2 YEAR
       .submit-wrap
         button(type="submit").btn SUBMIT
-          
+  script(src="./dist/ts/bookingroom.js")
+  script(src="./src/js/script.js")
