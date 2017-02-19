@@ -13,8 +13,7 @@ namespace Booking {
     private roomRow() {
 
       this.roomCount = Booking.$.selectBoxVal('.room-select');
-      console.log(this.roomCount);
-
+      
       this.roomTemplate = `
         <div class="row-index"><span class="row-id">1</span>
           <div class="row">
