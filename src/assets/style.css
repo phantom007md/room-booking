@@ -3,6 +3,7 @@ body,html{
   height: 100%;
   margin: 0px;
   padding: 0px;
+  counter-reset: roomId;
 }
 
 *{
@@ -68,6 +69,11 @@ body,html{
   background: #B5B5B5;
   color: #FFF;
 }
+
+/*.row-id::after{
+  counter-increment: roomId;
+  content: counter(roomId) ;
+}*/
 
 .adult-count{
   background:#B5B5B5;
