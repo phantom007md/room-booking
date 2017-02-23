@@ -7,7 +7,7 @@ namespace Booking {
  *                          wrapper of the element we want to select if its considerd.
  * @return {Node}           return the Element we select as s
  */
-    static select(s, context = null) {
+    static select(s, context?) {
       return (context) ? context.querySelector(s) : document.querySelector(s);
     }
 /**
@@ -16,9 +16,9 @@ namespace Booking {
  * @param  {Node} context=null
  * @return {Node}              return an array of the selected elements.
  */
-    static selectall(s, context = null) {
-      // return Array.from(document.querySelectorAll(s));
-      return (context) ? context.querySelectorAll(s) :  document.querySelectorAll(s) ;
+    static selectall(s, context?):Array<any> {
+      const elems= Array.from((context) ? context.querySelectorAll(s) :  document.querySelectorAll(s));
+      return elems;
     }
 /**
  * making delegate event bye adding the event on the parent of an element.
@@ -31,37 +31,27 @@ namespace Booking {
  */
     static on(parent, eventType, elem, fn) {
       let func = (event) => {
-        /**
-         * check if the elem passed is an object or a selector.
-         * @param  {any} typeofelem==="string"
-         * @return {voide}
-         */
+        let elems;
         if (typeof elem === "string") {
-          /**
-           * select the elem passed and run the function if its (clickd) on the target.
-           * @param  {Node} event.target===Booking.$.select(elem)
-           * @return {function}
-           */
-          if(event.target === Booking.$.select(elem)) {
-            fn(event);
-          }
-        }else{
-          /**
-           * run the function if its (clickd) on the target.
-           * @param  {Node} event.target===elem
-           * @return {function}
-           */
-          if(event.target === elem) {
-            fn(event);
-          }
+          elems = Booking.$.selectall(elem);
+        }else if(Array.isArray(elem)) {
+          elems = elem;
+        } else {
+          elems = [elem];
+        }
+        if(elems.find(el => el === event.target)) {
+          fn(event);
         }
       };
 
       if (typeof parent === "string") {
-        Booking.$.select(parent).addEventListener(eventType, func);
-      } else {
-        parent.addEventListener(eventType, func);
-      }
+        const parentArr = Booking.$.selectall(parent)
+        parentArr.forEach(item => item.addEventListener(eventType, func));
+      } else if (Array.isArray(parent)) {
+          parent.forEach(item => item.addEventListener(eventType, func));
+        }else{
+          parent.addEventListener(eventType, func);
+        }
     }
 
     static findParent(target_elem, parent_elem) {
@@ -86,6 +76,5 @@ namespace Booking {
 
       }
     }
-
   }
 }
