@@ -12,18 +12,18 @@ function onError(err) {
   this.emit('end');
 }
 
-gulp.task('jadee', function () {
-  gulp.src('./src/**/*.jade')
-  .pipe(jadi({
-    pretty: true
-  }))
-  .pipe(gulp.dest('./'))
-})
+// gulp.task('jadee', function () {
+//   gulp.src('./src/**/*.jade')
+//   .pipe(jadi({
+//     pretty: true
+//   }))
+//   .pipe(gulp.dest('./'))
+// })
 
 gulp.task('compile-js', function() {
   var ts_opt = {
     // outDir: './dist',
-    // target: 'ES5',
+    target: 'ES6',
     // module: 'es2015',
     outFile: './dist/ts/bookingroom.js'
   }
@@ -55,13 +55,13 @@ gulp.task('rename',['compile-js'], function () {
 
 
 
-gulp.task('default', ['rename','jadee'], function() {
+gulp.task('default', ['rename'], function() {
   b_sync.init({
     server: {
       baseDir: "./"
     }
   });
-  gulp.watch('./src/**/*.jade', ['jadee']);
+  // gulp.watch('./src/**/*.jade', ['jadee']);
   gulp.watch('./src/**/*.ts', ['rename']);
   gulp.watch('./**/*.{html,css}', ['rename'], function() {
     gulp.src('./src/**/*.css').pipe(b_sync.stream());

@@ -60,6 +60,16 @@ body,html{
   flex-direction: column;
 }
 
+.child-select{
+  width: auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.child-age-wrap{
+  margin: 2px 5px;
+}
+
 .row-id{
   width: 3%;
   align-self: stretch;
