@@ -1,74 +1,112 @@
 /// <reference path="./util.ts"/>
-
 namespace Booking {
   export class RoomManage {
-    private roomTemplate: Element;
-    private roomCount: number;
-    private rooms: Object;
-    private childAgeTemplate: string;
-    private infantAgeTemplate: string;
-    private roomIndex: number;
-    private roomIndexArr: Element[];
-    private rowIndexNum: number;
     constructor() {
-      this.roomCountVal();
       this.bindDeligateEvents();
       this.templateInjector();
     }
-    private roomCountVal(){
-      let roomSelectValue = Booking.$.selectBoxVal('.room-select');
-      this.roomCount = parseInt(roomSelectValue);
-    }
-    private roomIndexCounter(){
-      this.roomIndexArr = Booking.$.selectall('.row-id');
-      this.roomIndex =  this.roomIndexArr.length
-    }
-    private rowIndexNumGenerate(){
-      let rowIds = Booking.$.selectall('.row-id');
-      this.rowIndexNum = rowIds.length + 1;
-    }
+    //----------------------BindEvents-----------------------------
     private bindDeligateEvents(){
       Booking.$.on('body','change','.room-select', () => {
-        this.roomCountVal();
-        this.roomIndexCounter();
         this.roomIndexManager();
       });
-      // Booking.$.on('body','change','.child-count', () => {
-      //   this.childCountVal();
-      //   this.roomIndexCounter();
-      //   this.roomIndexManager();
-      // });
+      Booking.$.on('body','change','.child-count', () => {
+        this.childIndexManager();
+      });
+    }
+    //---------------------RoomIndexing----------------------------
+    private roomRowArr(){
+      const roomArr = Booking.$.selectall('.row-index');
+      return roomArr;
+    }
+    private roomCountVal(){
+      const roomSelectValue = Booking.$.selectBoxVal('.room-select');
+      return parseInt(roomSelectValue);
+    }
+    private roomIndexCounter(){
+      let roomIndexArr = Booking.$.selectall('.row-id');
+      return  roomIndexArr.length
+    }
+    private rowIndexNumGenerate(){
+      const rowIds = this.roomIndexCounter();
+      return rowIds + 1;
     }
     private roomIndexManager(){
-      if (this.roomCount == this.roomIndex) {
+      const roomCount = this.roomCountVal();
+      const roomIndex = this. roomIndexCounter();
+      if (roomCount == roomIndex) {
         return
-      }else if(this.roomCount > this.roomIndex){
-        let nRoom = this.roomCount - this.roomIndex
+      }else if(roomCount > roomIndex){
+        const nRoom = roomCount - roomIndex
         for (let i = 0; i < nRoom; i++) {
             this.templateInjector();
         }
-      }else if(this.roomCount < this.roomIndex) {
+      }else if(roomCount < roomIndex) {
         this.removeRoomIndex();
       }
     }
     private removeRoomIndex(){
-      let rowIds = Booking.$.selectall('.row-index');
-      let rowIdsNum = rowIds.length;
-      let needToDelete =  rowIdsNum - this.roomCount;
+      const rowIdsNum = this.roomIndexCounter();
+      const roomCount = this.roomCountVal();
+      const needToDelete =  rowIdsNum - roomCount;
+      const roomArr = this.roomRowArr();
       for (let i = 0; i < needToDelete; i++) {
-          rowIds[i+this.roomCount].remove();
+          console.log('needToDelete')
+          roomArr[i+roomCount].remove();
       }
     }
-    private templateInjector(){
-      this.rowIndexNumGenerate();
-      this.templateGenrator();
-      Booking.$.select('.row-index-wrap').appendChild(this.roomTemplate);
+    //--------------------ChildIndexing----------------------------
+    private childCountVal(){
+      const childSelectVal = Booking.$.selectBoxVal('.child-count');
+      return parseInt(childSelectVal);
     }
+    private childIndexCounter(){
+      const childIndexArr = Booking.$.selectall('.child-age-wrap');
+      return childIndexArr.length
+    }
+    private childArr(){
+      const Arr = Booking.$.selectall('.child-age-wrap');
+      return Arr;
+    }
+    private childIndexManager(){
+      const childCount = this.childCountVal();
+      const childIndex = this.childIndexCounter();
+      if (childCount == childIndex) {
+        return
+      }else if(childCount > childIndex){
+        const nRoom = childCount - childIndex
+        for (let i = 0; i < nRoom; i++) {
+            this.childTemplateInjector();
+        }
+      }else if(childCount < childIndex) {
+        this.removeChildIndex();
+      }
+    }
+    private removeChildIndex(){
+      const childCount = this.childCountVal();
+      const childIdsNum = this.childIndexCounter()
+      let needToDelete =  childIdsNum - childCount;
+      const childArr = this.childArr()
+      for (let i = 0; i < needToDelete; i++) {
+          childArr[i+childCount].remove();
+      }
+    }
+    //--------------------TemplateInjector-------------------------
+    private templateInjector(){
+      const roomTemplate = this.templateGenrator();
+      Booking.$.select('.row-index-wrap').appendChild(roomTemplate);
+    }
+    private childTemplateInjector(){
+      const childTemplate = this.childTemplateGenerator();
+      Booking.$.select('.child-select').appendChild(childTemplate);
+    }
+    private infantTemplateInjector(){}
+    //-----------------------TemplateGenerator---------------------
     private templateGenrator() {
       let appendHandler = document.createElement('div');
       appendHandler.classList.add('row-index')
       let roomTemplateString = `
-          <span class="row-id">${this.rowIndexNum}</span>
+          <span class="row-id">${this.rowIndexNumGenerate()}</span>
           <div class="row">
             <div class="count-select"><span>adult count:</span>
               <select class="adult-count">
@@ -90,33 +128,41 @@ namespace Booking {
               </select>
             </div>
             <div class="age-select">
+              <div class="child-select">
+
+              </div>
             </div>
           </div>`;
-        appendHandler.innerHTML = roomTemplateString;
-        this.roomTemplate = appendHandler;
+      appendHandler.innerHTML = roomTemplateString;
+      return appendHandler;
     }
     private childTemplateGenerator(){
-      this.childAgeTemplate=`
-      <div class="child-age-wrap"><span>child </span><span>1</span><span>age</span>
-        <select class="child-age">
-          <option>2 YEAR</option>
-          <option>3 YEAR</option>
-          <option>4 YEAR</option>
-          <option>5 YEAR</option>
-          <option>6 YEAR</option>
-          <option>7 YEAR</option>
-        </select>
-      </div>`;
+      let appendhandler = document.createElement('div');
+      appendhandler.classList.add('child-age-wrap');
+      let childTemplate=`
+      <span>child </span>
+      <span>1</span>
+      <span>age</span>
+      <select class="child-age">
+        <option>2 YEAR</option>
+        <option>3 YEAR</option>
+        <option>4 YEAR</option>
+        <option>5 YEAR</option>
+        <option>6 YEAR</option>
+        <option>7 YEAR</option>
+      </select>`;
+      appendhandler.innerHTML = childTemplate;
+      return appendhandler;
     }
     private infantTemplateGenerator(){
-      this.infantAgeTemplate=`
-      <div class="infant-age-wrap"><span>infant </span><span>1</span><span>age</span>
-        <select class="infant-age">
-          <option>0 YEAR </option>
-          <option>1 YEAR</option>
-          <option>2 YEAR</option>
-        </select>
-      </div>`;
+      // this.infantAgeTemplate=`
+      // <div class="infant-age-wrap"><span>infant </span><span>1</span><span>age</span>
+      //   <select class="infant-age">
+      //     <option>0 YEAR </option>
+      //     <option>1 YEAR</option>
+      //     <option>2 YEAR</option>
+      //   </select>
+      // </div>`;
     }
   }
 }
