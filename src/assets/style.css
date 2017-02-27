@@ -121,6 +121,10 @@ body,html{
   color: #FFF;
 }
 
+.infant-select{
+  display: flex;
+}
+
 .infant-age{
   background:#B5B5B5;
   border: 1px solid #5D5D5D;
