@@ -7,15 +7,10 @@ namespace Booking {
     }
     //----------------------BindEvents-----------------------------
     private bindDeligateEvents(){
-      Booking.$.on('body','change','.room-select', (e) => {
-        this.roomIndexManager();
-      });
-      Booking.$.on('body','change','.child-count', (e) => {
-        this.childIndexManager(e);
-      });
-      Booking.$.on('body','change','.infant-count', (e) => {
-        this.infantIndexManager(e);
-      });
+      Booking.$.on('body','change','.room-select', e => this.roomIndexManager());
+      Booking.$.on('body','change','.child-count', e => this.childIndexManager(e));
+      Booking.$.on('body','change','.infant-count', e => this.infantIndexManager(e));
+      Booking.$.on('body','click','.btn', e => this.JSONGenerate(e));
     }
     //---------------------RoomIndexing----------------------------
     private roomRowArr(){
@@ -27,12 +22,20 @@ namespace Booking {
       return parseInt(roomSelectValue);
     }
     private roomIndexCounter(){
-      let roomIndexArr = Booking.$.selectall('.row-id');
+      const roomIndexArr = Booking.$.selectall('.row-id');
       return  roomIndexArr.length
     }
     private rowIndexNumGenerate(){
-      const rowIds = this.roomIndexCounter();
+      let rowIds = this.roomIndexCounter();
       return rowIds + 1;
+    }
+    private  childNumber(){
+      let childNumber = Booking.$.selectall('.child-age-wrap');
+      return childNumber.length + 1;
+    }
+    private  infantNumber(){
+      let infantNumber = Booking.$.selectall('.infant-age-wrap');
+      return infantNumber.length + 1;
     }
     private roomIndexManager(){
       const roomCount = this.roomCountVal();
@@ -54,7 +57,6 @@ namespace Booking {
       const needToDelete =  rowIdsNum - roomCount;
       const roomArr = this.roomRowArr();
       for (let i = 0; i < needToDelete; i++) {
-          console.log('needToDelete')
           roomArr[i+roomCount].remove();
       }
     }
@@ -192,7 +194,7 @@ namespace Booking {
       appendhandler.classList.add('child-age-wrap');
       appendhandler.innerHTML =`
       <span>child </span>
-      <span>1</span>
+      <span>${this.childNumber()}</span>
       <span>age</span>
       <select class="child-age">
         <option>2 YEAR</option>
@@ -208,13 +210,38 @@ namespace Booking {
       let appendHandler = document.createElement('div');
       appendHandler.classList.add('infant-age-wrap');
       appendHandler.innerHTML = `
-      <span>infant </span><span>1</span><span>age</span>
+      <span>infant </span>
+      <span>${this.infantNumber()}</span>
+      <span>age</span>
         <select class="infant-age">
           <option>0 YEAR </option>
           <option>1 YEAR</option>
           <option>2 YEAR</option>
         </select>`;
       return appendHandler;
+    }
+    //-----------------------JSONGenerator---------------------
+    private JSONGenerate(e){
+
+      const rooms = Booking.$.selectall('.row');
+      const output = [];
+
+      for (let i = 0; i < rooms.length; i++) {
+        const childs = [];
+        const infants = [];
+          const adults = Booking.$.selectBoxVal('.adult-count', rooms[i]);
+          const childsSelectBoxs = Booking.$.selectall('.child-age', rooms[i]);
+          for (let j = 0; j < childsSelectBoxs.length; j++) {
+              childs.push(Booking.$.selectBoxVal(childsSelectBoxs[j]));
+          }
+          const infantsSelectBoxs = Booking.$.selectall('.infant-age', rooms[i]);
+          for (let k = 0; k < infantsSelectBoxs.length; k++) {
+              infants.push(Booking.$.selectBoxVal(infantsSelectBoxs[k]));
+          }
+          output.push({adults,childs,infants});
+      }
+      const JSONString = JSON.stringify(output);
+      console.log(JSONString);
     }
   }
 }

@@ -65,13 +65,11 @@ namespace Booking {
         return true;
     }
 
-    static selectBoxVal(selector){
+    static selectBoxVal(selector, context?){
       if (selector instanceof HTMLSelectElement) {
-        // console.log('its an obj');
         return selector.options[selector.selectedIndex].value;
       }else{
-        const selectBox = Booking.$.select(selector);
-        // console.log('its an elem');
+        const selectBox = Booking.$.select(selector,context);
         return selectBox.options[selectBox.selectedIndex].value;
 
       }
